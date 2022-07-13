@@ -10,7 +10,4 @@ pub mod instruction;
 #[doc(hidden)]
 pub mod processor;
 
-#[allow(missing_docs)]
-pub mod cpi;
-
-declare_id_with_central_state!("GgFVMhNxYwJ5FNU6b7Vpzta3envkFh5p8EBQTycsSWKm");
+declare_id_with_central_state!("B3dXF6BNwFSpfASDw4JkDiXRXR3bTit4tg2LooJ948Hq");

@@ -7,13 +7,9 @@ use {
     },
 };
 
-use solana_program::pubkey;
-
 use crate::instruction::ProgramInstruction;
 
-pub mod example_instr;
-
-pub const INNER_PGR_ID: Pubkey = pubkey!("B3dXF6BNwFSpfASDw4JkDiXRXR3bTit4tg2LooJ948Hq");
+pub mod inner_cpi;
 
 pub struct Processor {}
 
@@ -30,11 +26,11 @@ impl Processor {
         msg!("Instruction unpacked");
 
         match instruction {
-            ProgramInstruction::ExampleInstr => {
-                msg!("Instruction: Example Instruction");
-                let params = example_instr::Params::try_from_slice(instruction_data)
+            ProgramInstruction::InnerCpi => {
+                msg!("Instruction: Inner CPI");
+                let params = inner_cpi::Params::try_from_slice(instruction_data)
                     .map_err(|_| ProgramError::InvalidInstructionData)?;
-                example_instr::process(program_id, accounts, params)?;
+                inner_cpi::process(program_id, accounts, params)?;
             }
         }
 

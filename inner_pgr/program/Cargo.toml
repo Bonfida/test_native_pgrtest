@@ -1,5 +1,5 @@
 [package]
-name = "test-native-pgrtest"
+name = "test-native-pgrtest-inner"
 version = "0.1.0"
 edition = "2018"
 
@@ -21,7 +21,6 @@ spl-token = {version="3.3.0", features= ["no-entrypoint"]}
 bonfida-utils = "0.2.12"
 spl-associated-token-account = {version = "1.0.5"}
 bytemuck = "1.9.1"
-test-native-pgrtest-inner = {path = "../inner_pgr/program/", features = ["no-entrypoint"]} 
 
 [dev-dependencies]
 hexdump = "0.1.0"

@@ -1,20 +1,15 @@
 use crate::common::utils::sign_send_instructions;
 use solana_program::system_program;
+use solana_sdk::account::Account;
 use test_native_pgrtest::{
-    central_state,
     entrypoint::process_instruction,
-    instruction::{
-        example,
-        example_instr::{Accounts, Params},
-    },
+    instruction::example,
+    processor::example_instr::{self},
 };
 
 use {
     solana_program_test::{processor, ProgramTest},
-    solana_sdk::{
-        account::Account,
-        signer::{keypair::Keypair, Signer},
-    },
+    solana_sdk::signer::{keypair::Keypair, Signer},
 };
 
 pub mod common;
@@ -30,7 +25,11 @@ async fn test() {
         processor!(process_instruction),
     );
 
-    // program_test.add_program("example_dependency", example_dependency::ID, None);
+    program_test.add_program(
+        "dd",
+        test_native_pgrtest_inner::ID,
+        processor!(test_native_pgrtest_inner::entrypoint::process_instruction),
+    );
 
     program_test.add_account(
         alice.pubkey(),
@@ -46,16 +45,13 @@ async fn test() {
     let mut prg_test_ctx = program_test.start_with_context().await;
 
     let instruction = example(
-        Accounts {
+        example_instr::Accounts {
+            inner_program: &test_native_pgrtest_inner::ID,
             system_program: &system_program::ID,
             fee_payer: &alice.pubkey(),
-            example_state: &central_state::KEY,
-            // example_state2: &central_state::KEY,
-            // example_state3: &central_state::KEY,
-            // example_state4: &central_state::KEY,
-            // example_state5: &central_state::KEY,
+            example_state: &test_native_pgrtest_inner::central_state::KEY,
         },
-        Params {},
+        example_instr::Params {},
     );
 
     sign_send_instructions(&mut prg_test_ctx, vec![instruction], vec![&alice])
