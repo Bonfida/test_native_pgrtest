@@ -60,6 +60,7 @@ pub fn process(program_id: &Pubkey, accounts: &[AccountInfo], _params: Params) -
             system_program: &system_program::ID,
             fee_payer: accounts.fee_payer.key,
             example_state: accounts.example_state.key,
+            example_state2: accounts.example_state.key,
         },
         inner_cpi::Params {},
     );
@@ -69,6 +70,7 @@ pub fn process(program_id: &Pubkey, accounts: &[AccountInfo], _params: Params) -
             accounts.inner_program.clone(),
             accounts.system_program.clone(),
             accounts.fee_payer.clone(),
+            accounts.example_state.clone(),
             accounts.example_state.clone(),
         ],
         &[&[program_id.to_bytes().as_slice(), &[central_state::NONCE]]],
